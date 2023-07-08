@@ -2,3 +2,4 @@
 
 port: 8081
 
+log_level: DEBUG

@@ -8,9 +8,9 @@ import (
 )
 
 func main() {
-	logger := logs.New()
 
 	cfg := config.GetConfig()
-	logger.Log("config initialized")
-	logger.Log(fmt.Sprintf("%v\n", cfg))
+	logger := logs.New(cfg.LogLevel)
+	logger.Info("config initialized")
+	logger.Info(fmt.Sprintf("%+v\n", cfg))
 }
