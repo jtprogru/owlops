@@ -1,0 +1,22 @@
+---
+name: Main
+
+"on":
+  push:
+    branches:
+      - main
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.20.5"
+      - name: Install task
+        run: go install github.com/go-task/task/v3/cmd/task@latest
+      - name: Build
+        run: task build
+      - name: Run app
+        run: task run

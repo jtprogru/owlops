@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+set:
+  - pipefail
+
+silent: false
+
+vars:
+  PROJECT_NAME: owlops
+  PROJECT_VERSION: v0.1.0
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list --color
+  prec:
+    desc: Preconditions for project
+    preconditions:
+      - test -f .golangci.yaml
+      - test -f $(which golangci-lint)
+      - test -f $(which goimports)
+      - test -f $(which gofmt)
+      - test -f $(which go)
+      - test -f go.mod
+      - test -d dist || mkdir dist
+
+  tidy:
+    desc: Install all dependencies
+    deps:
+      - prec
+    cmds:
+      - go mod tidy
+
+  run:
+    desc: Run builded file
+    deps:
+      - build
+    preconditions:
+      - test -f ./dist/{{.PROJECT_NAME}}
+    cmds:
+      - ./dist/{{.PROJECT_NAME}} -config ./config/config.local.yaml
+
+  build:
+    desc: Build binary file
+    deps:
+      - prec
+    cmds:
+      - go build  -o ./dist/{{.PROJECT_NAME}} ./cmd/{{.PROJECT_NAME}}/main.go
+
+  fmt:
+    desc: Run go fmt
+    deps:
+      - prec
+    cmds:
+      - gofmt -s -w .
+
+  goimports:
+    desc: Run goimports
+    deps:
+      - prec
+    cmds:
+      - goimports -w -e -l -v .
+
+  vet:
+    desc: Run go vet
+    deps:
+      - prec
+    cmds:
+      - go vet ./...
+
+  test:
+    desc: Run tests without caching
+    deps:
+      - prec
+    preconditions:
+      - go clean -testcache
+    cmds:
+      - go test ./...
+
+  lint:
+    desc: Run golangci-lint
+    deps:
+      - prec
+    cmds:
+      - golangci-lint -v run --out-format=colored-line-number --fix --config .golangci.yaml ./...
