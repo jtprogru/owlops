@@ -16,7 +16,9 @@ jobs:
           go-version: "1.20.5"
       - name: Install task
         run: go install github.com/go-task/task/v3/cmd/task@latest
-      - name: Build
-        run: task build
-      - name: Run app
-        run: task run
+      - name: Install golangci-lint
+        run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      - name: Lint
+        run: task lint
+      - name: Run tests
+        run: task test
