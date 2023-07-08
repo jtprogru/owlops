@@ -7,6 +7,11 @@ set:
 
 silent: false
 
+output:
+  group:
+    begin: '::group::{{.TASK}}'
+    end: '::endgroup::'
+
 vars:
   PROJECT_NAME: owlops
   PROJECT_VERSION: v0.1.0
