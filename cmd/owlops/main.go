@@ -8,9 +8,12 @@ import (
 )
 
 func main() {
-
+	// Get configuration
 	cfg := config.GetConfig()
+
+	// Create logger
 	logger := logs.New(cfg.LogLevel)
+
 	logger.Debug("app is running", "method", "cmd.owlops.main")
 	logger.Info(fmt.Sprintf("%+v\n", cfg))
 }

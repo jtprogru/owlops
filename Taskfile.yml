@@ -9,8 +9,8 @@ silent: false
 
 output:
   group:
-    begin: '::group::{{.TASK}}'
-    end: '::endgroup::'
+    begin: "::group::{{.TASK}}"
+    end: "::endgroup::"
 
 vars:
   PROJECT_NAME: owlops
@@ -21,6 +21,7 @@ tasks:
     silent: true
     cmds:
       - task --list --color
+
   prec:
     desc: Preconditions for project
     preconditions:
@@ -83,7 +84,7 @@ tasks:
     preconditions:
       - go clean -testcache
     cmds:
-      - go test ./...
+      - go test -v ./... -config ./config/config.local.yaml
 
   lint:
     desc: Run golangci-lint

@@ -4,7 +4,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/jtprogru/owlops/internal/config"
 	"golang.org/x/exp/slog"
 )
 
@@ -27,9 +26,10 @@ func New(logLevel string) *slog.Logger {
 		os.Stdout,
 		&slog.HandlerOptions{
 			Level: logLvl,
-		}).WithAttrs([]slog.Attr{slog.String("version", config.Version)})
+		})
 
 	logger := slog.New(jsonHandler)
 	logger.Debug("logger initialized", "method", op)
+
 	return logger
 }
