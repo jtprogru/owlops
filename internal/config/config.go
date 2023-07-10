@@ -19,7 +19,7 @@ type Config struct {
 const (
 	configDefaulPath   = "config/config.yaml"
 	op                 = "internal.config.New"
-	Version            = "v0.1.0"
+	Version            = "v0.0.1"
 	EnvConfigPathName  = "CONFIG-PATH"
 	FlagConfigPathName = "config"
 )

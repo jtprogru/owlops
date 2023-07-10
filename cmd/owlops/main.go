@@ -11,6 +11,6 @@ func main() {
 
 	cfg := config.GetConfig()
 	logger := logs.New(cfg.LogLevel)
-	logger.Info("config initialized")
+	logger.Debug("app is running", "method", "cmd.owlops.main")
 	logger.Info(fmt.Sprintf("%+v\n", cfg))
 }
